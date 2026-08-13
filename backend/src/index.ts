@@ -32,6 +32,11 @@ app.get('/', (req, res) => {
   res.send('Catalog API is running');
 });
 
-app.listen(PORT, () => {
+// Health check for Render
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
+
+app.listen(PORT as number, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);
 });
