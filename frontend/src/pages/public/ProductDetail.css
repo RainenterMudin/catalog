@@ -1,0 +1,136 @@
+.product-detail-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.breadcrumb {
+  margin-bottom: 2rem;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.breadcrumb a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+}
+
+.product-detail-image {
+  background: #f8fafc;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.product-detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.placeholder-image-large {
+  color: #94a3b8;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.product-detail-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-tag {
+  display: inline-block;
+  background: #eff6ff;
+  color: #3b82f6;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.product-detail-info h1 {
+  font-size: 2.5rem;
+  color: #1e293b;
+  margin: 0 0 1rem 0;
+  font-weight: 800;
+}
+
+.product-detail-info .price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin: 0 0 2rem 0;
+}
+
+.description {
+  margin-bottom: 3rem;
+}
+
+.description h3 {
+  font-size: 1.1rem;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.description p {
+  color: #475569;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.actions {
+  margin-top: auto;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  background: #1e293b;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-to-cart-btn:hover {
+  background: #0f172a;
+  transform: translateY(-2px);
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 5rem;
+  font-size: 1.2rem;
+  color: #64748b;
+}
+
+@media (max-width: 768px) {
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+}

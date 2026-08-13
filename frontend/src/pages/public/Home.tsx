@@ -1,0 +1,66 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import PublicLayout from '../../components/public/PublicLayout';
+import api from '../../services/api';
+import './Home.css';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+}
+
+const Home = () => {
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await api.get('/products');
+        setFeaturedProducts(res.data.slice(0, 4)); // Show first 4
+      } catch (error) {
+        console.error('Failed to fetch products', error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  return (
+    <PublicLayout>
+      <section className="hero">
+        <div className="hero-content">
+          <h1>Discover Premium Products</h1>
+          <p>Explore our curated collection of the best items carefully selected just for you.</p>
+          <Link to="/products" className="hero-btn">Shop Now</Link>
+        </div>
+      </section>
+
+      <section className="featured">
+        <div className="container">
+          <h2>Featured Products</h2>
+          <div className="product-grid">
+            {featuredProducts.map(product => (
+              <div key={product.id} className="product-card">
+                <div className="product-image">
+                  {product.imageUrl ? (
+                    <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} />
+                  ) : (
+                    <div className="placeholder-image">No Image</div>
+                  )}
+                </div>
+                <div className="product-info">
+                  <h3>{product.name}</h3>
+                  <p className="price">${Number(product.price).toFixed(2)}</p>
+                  <Link to={`/products/${product.id}`} className="view-btn">View Details</Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </PublicLayout>
+  );
+};
+
+export default Home;
