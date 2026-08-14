@@ -3,7 +3,7 @@ import prisma from '../utils/prisma';
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const { subCategoryId, categoryId, page = 1, limit = 12, search } = req.query;
+    const { subCategoryId, categoryId, page = 1, limit = 12, search, isFeatured } = req.query;
     let where: any = {};
     if (subCategoryId) {
       where.subCategoryId = Number(subCategoryId);
@@ -12,6 +12,9 @@ export const getProducts = async (req: Request, res: Response) => {
     }
     if (search) {
       where.name = { contains: String(search) };
+    }
+    if (isFeatured === 'true') {
+      where.isFeatured = true;
     }
     
     const pageNumber = Number(page);
@@ -63,7 +66,7 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const { name, description, price, subCategoryId } = req.body;
+    const { name, description, price, subCategoryId, isFeatured } = req.body;
     const imageUrl = req.file ? req.file.path : null;
     
     const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -81,6 +84,7 @@ export const createProduct = async (req: Request, res: Response) => {
         description,
         price: Number(price),
         slug,
+        isFeatured: isFeatured === 'true',
         subCategoryId: Number(subCategoryId),
         imageUrl
       },
@@ -94,7 +98,7 @@ export const createProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name, description, price, subCategoryId } = req.body;
+    const { name, description, price, subCategoryId, isFeatured } = req.body;
     
     const data: any = {
       name,
@@ -102,6 +106,10 @@ export const updateProduct = async (req: Request, res: Response) => {
       price: price ? Number(price) : undefined,
       subCategoryId: subCategoryId ? Number(subCategoryId) : undefined,
     };
+    
+    if (isFeatured !== undefined) {
+      data.isFeatured = isFeatured === 'true';
+    }
 
     if (name) {
       const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');

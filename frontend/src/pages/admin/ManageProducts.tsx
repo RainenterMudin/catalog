@@ -11,6 +11,7 @@ interface Product {
   description: string;
   price: number;
   imageUrl: string;
+  isFeatured: boolean;
   subCategoryId: number;
   subCategory?: {
     id: number;
@@ -36,6 +37,7 @@ const ManageProducts = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [subCategoryId, setSubCategoryId] = useState('');
+  const [isFeatured, setIsFeatured] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -79,6 +81,7 @@ const ManageProducts = () => {
     formData.append('description', description);
     formData.append('price', price);
     formData.append('subCategoryId', subCategoryId);
+    formData.append('isFeatured', String(isFeatured));
     if (image) {
       formData.append('image', image);
     }
@@ -106,6 +109,7 @@ const ManageProducts = () => {
     setDescription(product.description);
     setPrice(product.price.toString());
     setSubCategoryId(product.subCategoryId.toString());
+    setIsFeatured(product.isFeatured || false);
     setImage(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
@@ -127,6 +131,7 @@ const ManageProducts = () => {
     setDescription('');
     setPrice('');
     setSubCategoryId('');
+    setIsFeatured(false);
     setImage(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
@@ -166,6 +171,17 @@ const ManageProducts = () => {
               <textarea value={description} onChange={e => setDescription(e.target.value)} rows={3} required />
             </div>
 
+            <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <input 
+                type="checkbox" 
+                id="isFeatured" 
+                checked={isFeatured} 
+                onChange={e => setIsFeatured(e.target.checked)} 
+                style={{ width: 'auto' }}
+              />
+              <label htmlFor="isFeatured" style={{ marginBottom: 0, cursor: 'pointer' }}>Set as Featured Product (Show on Home Page)</label>
+            </div>
+
             <div className="form-group">
               <label>Product Image</label>
               <input type="file" accept="image/*" onChange={e => setImage(e.target.files ? e.target.files[0] : null)} ref={fileInputRef} />
@@ -188,6 +204,7 @@ const ManageProducts = () => {
               <tr>
                 <th>Image</th>
                 <th>Name</th>
+                <th>Featured</th>
                 <th>Sub-Category</th>
                 <th>Price</th>
                 <th>Actions</th>
@@ -204,6 +221,7 @@ const ManageProducts = () => {
                     )}
                   </td>
                   <td>{product.name}</td>
+                  <td>{product.isFeatured ? '⭐ Yes' : 'No'}</td>
                   <td>{product.subCategory?.category?.name} - {product.subCategory?.name}</td>
                   <td>{formatRupiah(product.price)}</td>
                   <td className="">

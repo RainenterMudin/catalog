@@ -20,9 +20,9 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await api.get('/products');
+        const res = await api.get('/products?isFeatured=true');
         const fetchedProducts = res.data.data || (Array.isArray(res.data) ? res.data : []);
-        setFeaturedProducts(fetchedProducts.slice(0, 4)); // Show first 4
+        setFeaturedProducts(fetchedProducts.slice(0, 4)); // Show up to 4 featured products
       } catch (error) {
         console.error('Failed to fetch products', error);
       }

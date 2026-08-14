@@ -43,6 +43,7 @@ model Product {
   price         Decimal     @db.Decimal(10, 2)
   slug          String?     @unique
   imageUrl      String?
+  isFeatured    Boolean     @default(false)
   subCategoryId Int
   subCategory   SubCategory @relation(fields: [subCategoryId], references: [id])
   createdAt     DateTime    @default(now())
