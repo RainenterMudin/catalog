@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Tags, Package, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Tags, Package, LogOut, Menu, X, Globe } from 'lucide-react';
 import './AdminLayout.css';
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
@@ -47,6 +47,11 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           <Link to="/cms/products" className={`nav-item ${isActive('/cms/products')}`}>
             <Package size={20} />
             <span>Products</span>
+          </Link>
+          <div className="nav-divider" style={{ margin: '1rem 0', borderTop: '1px solid #e2e8f0' }}></div>
+          <Link to="/" className="nav-item">
+            <Globe size={20} />
+            <span>View Website</span>
           </Link>
         </nav>
         <div className="sidebar-footer">
