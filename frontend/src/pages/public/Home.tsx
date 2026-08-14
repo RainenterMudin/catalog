@@ -16,6 +16,7 @@ interface Product {
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -26,6 +27,24 @@ const Home = () => {
         ? scrollRef.current.scrollLeft - scrollAmount 
         : scrollRef.current.scrollLeft + scrollAmount;
       scrollRef.current.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
+    }
+  };
+
+  const scrollToItem = (index: number) => {
+    if (scrollRef.current) {
+      const firstChild = scrollRef.current.children[0] as HTMLElement;
+      const scrollAmount = firstChild ? firstChild.clientWidth + 24 : 320;
+      scrollRef.current.scrollTo({ left: index * scrollAmount, behavior: 'smooth' });
+      setActiveIndex(index);
+    }
+  };
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const firstChild = scrollRef.current.children[0] as HTMLElement;
+      const scrollAmount = firstChild ? firstChild.clientWidth + 24 : 320;
+      const index = Math.round(scrollRef.current.scrollLeft / scrollAmount);
+      setActiveIndex(index);
     }
   };
 
@@ -73,8 +92,7 @@ const Home = () => {
         <div className="container">
           <h2>Featured Products</h2>
           <div className="carousel-wrapper">
-            <button className="carousel-btn left" onClick={() => scroll('left')}>&#8249;</button>
-            <div className="carousel-track" ref={scrollRef}>
+            <div className="carousel-track" ref={scrollRef} onScroll={handleScroll}>
               {featuredProducts.map(product => (
                 <div key={product.id} className="carousel-item">
                   <div className="product-card">
@@ -94,7 +112,22 @@ const Home = () => {
                 </div>
               ))}
             </div>
-            <button className="carousel-btn right" onClick={() => scroll('right')}>&#8250;</button>
+            
+            <div className="carousel-controls">
+              <div className="carousel-arrows">
+                <button className="carousel-arrow-btn" onClick={() => scroll('left')}>&#8249;</button>
+                <button className="carousel-arrow-btn" onClick={() => scroll('right')}>&#8250;</button>
+              </div>
+              <div className="carousel-dots">
+                {featuredProducts.map((_, idx) => (
+                  <span 
+                    key={idx} 
+                    className={`carousel-dot ${activeIndex === idx ? 'active' : ''}`}
+                    onClick={() => scrollToItem(idx)}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
