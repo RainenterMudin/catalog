@@ -70,7 +70,13 @@ const Home = () => {
       try {
         const res = await api.get('/products?isFeatured=true');
         const fetchedProducts = res.data.data || (Array.isArray(res.data) ? res.data : []);
-        setFeaturedProducts(fetchedProducts); // Show all featured products in carousel
+        let displayProducts = [...fetchedProducts];
+        if (displayProducts.length > 0 && displayProducts.length < 5) {
+          while (displayProducts.length < 5) {
+            displayProducts = [...displayProducts, ...fetchedProducts];
+          }
+        }
+        setFeaturedProducts(displayProducts);
       } catch (error) {
         console.error('Failed to fetch products', error);
       }
@@ -93,8 +99,8 @@ const Home = () => {
           <h2>Featured Products</h2>
           <div className="carousel-wrapper">
             <div className="carousel-track" ref={scrollRef} onScroll={handleScroll}>
-              {featuredProducts.map(product => (
-                <div key={product.id} className="carousel-item">
+              {featuredProducts.map((product, idx) => (
+                <div key={`${product.id}-${idx}`} className="carousel-item">
                   <div className="product-card">
                     <div className="product-image">
                       {product.imageUrl ? (
