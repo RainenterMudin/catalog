@@ -69,7 +69,15 @@ const ProductDetail = () => {
             </div>
             
             <div className="actions">
-              <button className="add-to-cart-btn">Interested? Contact Us</button>
+              <button 
+                className="add-to-cart-btn"
+                onClick={() => {
+                  const message = `Halo, saya tertarik dengan produk ${product.name}`;
+                  window.open(`https://wa.me/6282130907490?text=${encodeURIComponent(message)}`, '_blank');
+                }}
+              >
+                Pesan via WhatsApp
+              </button>
             </div>
           </div>
         </div>
