@@ -38,7 +38,7 @@ export const getProductById = async (req: Request, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const { name, description, price, subCategoryId } = req.body;
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file ? req.file.path : null;
     
     const product = await prisma.product.create({
       data: {
@@ -68,7 +68,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     };
 
     if (req.file) {
-      data.imageUrl = `/uploads/${req.file.filename}`;
+      data.imageUrl = req.file.path;
     }
 
     const product = await prisma.product.update({

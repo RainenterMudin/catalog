@@ -48,7 +48,7 @@ const ProductDetail = () => {
         <div className="product-detail-grid">
           <div className="product-detail-image">
             {product.imageUrl ? (
-              <img src={`https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} />
+              <img src={product.imageUrl.startsWith('http') ? product.imageUrl : `https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} />
             ) : (
               <div className="placeholder-image-large">No Image Available</div>
             )}

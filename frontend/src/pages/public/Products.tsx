@@ -143,7 +143,7 @@ const Products = () => {
               <div key={product.id} className="product-card">
                 <div className="product-image">
                   {product.imageUrl ? (
-                    <img src={`https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} />
+                    <img src={product.imageUrl.startsWith('http') ? product.imageUrl : `https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} />
                   ) : (
                     <div className="placeholder-image">No Image</div>
                   )}

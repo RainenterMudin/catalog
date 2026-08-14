@@ -190,7 +190,7 @@ const ManageProducts = () => {
                 <tr key={product.id}>
                   <td>
                     {product.imageUrl ? (
-                      <img src={`https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
+                      <img src={product.imageUrl.startsWith('http') ? product.imageUrl : `https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
                     ) : (
                       <div style={{ width: '50px', height: '50px', background: '#e2e8f0', borderRadius: '6px' }}></div>
                     )}
