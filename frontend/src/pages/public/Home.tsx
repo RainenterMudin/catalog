@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import PublicLayout from '../../components/public/PublicLayout';
 import api from '../../services/api';
 import { formatRupiah } from '../../utils/currencyFormatter';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-coverflow';
 import './Home.css';
 
 interface Product {
@@ -22,6 +16,35 @@ interface Product {
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const firstChild = scrollRef.current.children[0] as HTMLElement;
+      const scrollAmount = firstChild ? firstChild.clientWidth + 24 : 320; // card width + gap (1.5rem = 24px)
+      const newScrollPosition = direction === 'left' 
+        ? scrollRef.current.scrollLeft - scrollAmount 
+        : scrollRef.current.scrollLeft + scrollAmount;
+      scrollRef.current.scrollTo({ left: newScrollPosition, behavior: 'smooth' });
+    }
+  };
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+        // If reached the end, scroll back to beginning
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          scroll('right');
+        }
+      }
+    }, 3000); // 3 seconds interval
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -49,32 +72,12 @@ const Home = () => {
       <section className="featured">
         <div className="container">
           <h2>Featured Products</h2>
-          <div className="carousel-container">
-            <Swiper
-              modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
-              effect="coverflow"
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView={'auto'}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 2,
-                slideShadows: true,
-              }}
-              loop={true}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-              pagination={{ clickable: true }}
-              navigation={true}
-              className="featured-swiper"
-            >
+          <div className="carousel-wrapper">
+            <button className="carousel-btn left" onClick={() => scroll('left')}>&#8249;</button>
+            <div className="carousel-track" ref={scrollRef}>
               {featuredProducts.map(product => (
-                <SwiperSlide key={product.id} className="swiper-slide-custom">
-                  <div className="product-card carousel-card">
+                <div key={product.id} className="carousel-item">
+                  <div className="product-card">
                     <div className="product-image">
                       {product.imageUrl ? (
                         <img src={product.imageUrl.startsWith('http') ? product.imageUrl : `https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} />
@@ -88,9 +91,10 @@ const Home = () => {
                       <Link to={`/products/${product.slug}`} className="view-details-btn">View Details</Link>
                     </div>
                   </div>
-                </SwiperSlide>
+                </div>
               ))}
-            </Swiper>
+            </div>
+            <button className="carousel-btn right" onClick={() => scroll('right')}>&#8250;</button>
           </div>
         </div>
       </section>
