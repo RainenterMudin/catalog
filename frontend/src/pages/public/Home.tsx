@@ -83,6 +83,7 @@ const Home = () => {
         <div className="container">
           <h2>Featured Products</h2>
           <div className="carousel-wrapper">
+            <button className="carousel-arrow-btn left" onClick={() => scroll('left')}>&#8249;</button>
             <div className="carousel-track" ref={scrollRef} onScroll={handleScroll}>
               {featuredProducts.map((product, idx) => (
                 <div key={`${product.id}-${idx}`} className="carousel-item">
@@ -103,22 +104,7 @@ const Home = () => {
                 </div>
               ))}
             </div>
-            
-            <div className="carousel-controls">
-              <div className="carousel-arrows">
-                <button className="carousel-arrow-btn" onClick={() => scroll('left')}>&#8249;</button>
-                <button className="carousel-arrow-btn" onClick={() => scroll('right')}>&#8250;</button>
-              </div>
-              <div className="carousel-dots">
-                {featuredProducts.map((_, idx) => (
-                  <span 
-                    key={idx} 
-                    className={`carousel-dot ${activeIndex === idx ? 'active' : ''}`}
-                    onClick={() => scrollToItem(idx)}
-                  />
-                ))}
-              </div>
-            </div>
+            <button className="carousel-arrow-btn right" onClick={() => scroll('right')}>&#8250;</button>
           </div>
         </div>
       </section>
