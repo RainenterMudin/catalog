@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import api from '../../services/api';
 import { Edit, Trash2 } from 'lucide-react';
+import { formatRupiah } from '../../utils/currencyFormatter';
 import './AdminPages.css';
 
 interface Product {
@@ -30,14 +31,14 @@ interface SubCategory {
 const ManageProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
-  
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [subCategoryId, setSubCategoryId] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const [editingId, setEditingId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -136,7 +137,7 @@ const ManageProducts = () => {
               <label>Name</label>
               <input type="text" value={name} onChange={e => setName(e.target.value)} required />
             </div>
-            
+
             <div className="form-group">
               <label>Sub-Category</label>
               <select value={subCategoryId} onChange={e => setSubCategoryId(e.target.value)} required>
@@ -189,15 +190,15 @@ const ManageProducts = () => {
                 <tr key={product.id}>
                   <td>
                     {product.imageUrl ? (
-                      <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
+                      <img src={`https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
                     ) : (
                       <div style={{ width: '50px', height: '50px', background: '#e2e8f0', borderRadius: '6px' }}></div>
                     )}
                   </td>
                   <td>{product.name}</td>
                   <td>{product.subCategory?.category?.name} - {product.subCategory?.name}</td>
-                  <td>${Number(product.price).toFixed(2)}</td>
-                  <td className="actions-cell">
+                  <td>{formatRupiah(product.price)}</td>
+                  <td className="">
                     <button className="icon-btn edit" onClick={() => handleEdit(product)}>
                       <Edit size={18} />
                     </button>

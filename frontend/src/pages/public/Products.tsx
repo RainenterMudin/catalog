@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PublicLayout from '../../components/public/PublicLayout';
 import api from '../../services/api';
+import { formatRupiah } from '../../utils/currencyFormatter';
 import './Products.css';
 
 interface Product {
@@ -142,14 +143,14 @@ const Products = () => {
               <div key={product.id} className="product-card">
                 <div className="product-image">
                   {product.imageUrl ? (
-                    <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} />
+                    <img src={`https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} />
                   ) : (
                     <div className="placeholder-image">No Image</div>
                   )}
                 </div>
                 <div className="product-info">
                   <h3>{product.name}</h3>
-                  <p className="price">${Number(product.price).toFixed(2)}</p>
+                  <p className="price">{formatRupiah(product.price)}</p>
                   <Link to={`/products/${product.id}`} className="view-btn">View Details</Link>
                 </div>
               </div>

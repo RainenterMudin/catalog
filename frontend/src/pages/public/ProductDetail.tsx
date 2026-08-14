@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PublicLayout from '../../components/public/PublicLayout';
 import api from '../../services/api';
+import { formatRupiah } from '../../utils/currencyFormatter';
 import './ProductDetail.css';
 
 interface Product {
@@ -47,7 +48,7 @@ const ProductDetail = () => {
         <div className="product-detail-grid">
           <div className="product-detail-image">
             {product.imageUrl ? (
-              <img src={`http://localhost:5000${product.imageUrl}`} alt={product.name} />
+              <img src={`https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} />
             ) : (
               <div className="placeholder-image-large">No Image Available</div>
             )}
@@ -56,7 +57,7 @@ const ProductDetail = () => {
           <div className="product-detail-info">
             <span className="category-tag">{product.category?.name}</span>
             <h1>{product.name}</h1>
-            <p className="price">${Number(product.price).toFixed(2)}</p>
+            <p className="price">{formatRupiah(product.price)}</p>
             
             <div className="description">
               <h3>Description</h3>

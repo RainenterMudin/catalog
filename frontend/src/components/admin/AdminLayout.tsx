@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Tags, Package, LogOut } from 'lucide-react';
+import { LayoutDashboard, Tags, Package, LogOut, Menu, X } from 'lucide-react';
 import './AdminLayout.css';
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
@@ -15,14 +15,23 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isActive = (path: string) => location.pathname === path ? 'active' : '';
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="admin-layout">
-      <aside className="admin-sidebar">
-        <div className="sidebar-header">
+      <div className="mobile-topbar-wrapper">
+        <div className="mobile-topbar">
+          <h2>Catalog CMS</h2>
+          <button className="menu-toggle-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+      <aside className={`admin-sidebar ${isMenuOpen ? 'open' : ''}`}>
+        <div className="sidebar-header desktop-only">
           <h2>Catalog CMS</h2>
         </div>
-        <nav className="sidebar-nav">
+        <nav className="sidebar-nav" onClick={() => setIsMenuOpen(false)}>
           <Link to="/cms" className={`nav-item ${isActive('/cms')}`}>
             <LayoutDashboard size={20} />
             <span>Dashboard</span>

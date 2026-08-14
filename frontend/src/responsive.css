@@ -1,0 +1,134 @@
+/* Responsive Mobile Styles */
+
+@media (max-width: 768px) {
+  /* Public Layout */
+  .public-navbar .nav-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .nav-links {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  /* Admin Layout */
+  .admin-layout {
+    flex-direction: column !important;
+  }
+
+  .mobile-topbar-wrapper {
+    display: block !important;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .mobile-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+  }
+
+  .mobile-topbar h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #1e293b;
+  }
+
+  .menu-toggle-btn {
+    background: none;
+    border: none;
+    color: #475569;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .admin-sidebar {
+    display: none !important;
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 0 15px 15px 15px;
+    border-right: none !important;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #ffffff;
+  }
+
+  .admin-sidebar.open {
+    display: flex !important;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .nav-item {
+    padding: 10px 15px;
+    border-radius: 6px;
+  }
+  .admin-main {
+    padding: 15px;
+  }
+
+  /* Admin Pages (Tables & Forms) */
+  .admin-content-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+  .data-table-card {
+    overflow-x: auto !important;
+    max-width: calc(100vw - 30px); /* Account for .admin-main padding (15px * 2) */
+  }
+  .admin-table {
+    min-width: 600px; /* Force table to be wide enough to trigger scroll */
+  }
+  .admin-table th, .admin-table td {
+    padding: 10px;
+    white-space: nowrap;
+  }
+  
+  /* Product Grids */
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  .hero-section {
+    padding: 40px 20px;
+  }
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+  
+  /* Product Detail */
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  /* Login Page */
+  .login-box {
+    padding: 30px 20px;
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+}

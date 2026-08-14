@@ -20,7 +20,7 @@ interface SubCategory {
 const ManageSubCategories = () => {
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [categoryId, setCategoryId] = useState('');
@@ -97,8 +97,8 @@ const ManageSubCategories = () => {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Parent Category</label>
-              <select 
-                value={categoryId} 
+              <select
+                value={categoryId}
                 onChange={e => setCategoryId(e.target.value)}
                 required
               >
@@ -110,18 +110,18 @@ const ManageSubCategories = () => {
             </div>
             <div className="form-group">
               <label>Sub-Category Name</label>
-              <input 
-                type="text" 
-                value={name} 
-                onChange={e => setName(e.target.value)} 
-                required 
+              <input
+                type="text"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
               />
             </div>
             <div className="form-group">
               <label>Description</label>
-              <textarea 
-                value={description} 
-                onChange={e => setDescription(e.target.value)} 
+              <textarea
+                value={description}
+                onChange={e => setDescription(e.target.value)}
                 rows={4}
               />
             </div>
@@ -159,7 +159,7 @@ const ManageSubCategories = () => {
                   <td>{subCategory.category?.name}</td>
                   <td>{subCategory.name}</td>
                   <td>{subCategory.description}</td>
-                  <td className="actions-cell">
+                  <td className="">
                     <button className="icon-btn edit" onClick={() => handleEdit(subCategory)}>
                       <Edit size={18} />
                     </button>
