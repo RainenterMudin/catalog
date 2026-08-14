@@ -214,7 +214,7 @@ const ManageProducts = () => {
             <tbody>
               {products.map((product, index) => (
                 <tr key={product.id}>
-                  <td>{index + 1}</td>
+                  <td>{(page - 1) * 10 + index + 1}</td>
                   <td>
                     {product.imageUrl ? (
                       <img src={product.imageUrl.startsWith('http') ? product.imageUrl : `https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
@@ -247,7 +247,7 @@ const ManageProducts = () => {
           {totalPages > 1 && (
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
               <button 
-                className="btn-secondary" 
+                className="pagination-btn" 
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page === 1}
               >
@@ -255,7 +255,7 @@ const ManageProducts = () => {
               </button>
               <span style={{ fontSize: '0.9rem', color: '#64748b' }}>Page {page} of {totalPages}</span>
               <button 
-                className="btn-secondary" 
+                className="pagination-btn" 
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
               >

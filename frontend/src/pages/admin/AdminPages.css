@@ -1,4 +1,4 @@
-﻿.page-header {
+.page-header {
   margin-bottom: 2rem;
 }
 
@@ -64,6 +64,27 @@
 
 .btn-secondary:hover {
   background: #e2e8f0;
+}
+
+.pagination-btn {
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.875rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .data-table-card {
@@ -174,7 +195,6 @@
   color: #0f172a;
   margin: 0;
 }
-
 
 .form-group input,
 .form-group textarea,
