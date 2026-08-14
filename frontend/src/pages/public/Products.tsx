@@ -39,10 +39,13 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState<number | null>(null);
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
 
   useEffect(() => {
     fetchProducts();
-  }, [selectedCategory, selectedSubCategory]);
+  }, [selectedCategory, selectedSubCategory, page, search]);
 
   useEffect(() => {
     fetchCategories();
@@ -51,15 +54,20 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      let url = '/products';
+      let url = `/products?page=${page}`;
       if (selectedSubCategory) {
-        url = `/products?subCategoryId=${selectedSubCategory}`;
+        url += `&subCategoryId=${selectedSubCategory}`;
       } else if (selectedCategory) {
-        url = `/products?categoryId=${selectedCategory}`;
+        url += `&categoryId=${selectedCategory}`;
+      }
+      if (search) {
+        url += `&search=${search}`;
       }
       
       const res = await api.get(url);
-      setProducts(res.data);
+      setProducts(res.data.data);
+      setTotalPages(res.data.totalPages);
+      setTotalProducts(res.data.total);
     } catch (error) {
       console.error('Failed to fetch products', error);
     }
@@ -87,7 +95,21 @@ const Products = () => {
     ? subCategories.filter(sc => sc.categoryId === selectedCategory)
     : [];
 
-  const filteredProducts = products.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value ? Number(e.target.value) : null);
+    setSelectedSubCategory(null);
+    setPage(1);
+  };
+
+  const handleSubCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSubCategory(e.target.value ? Number(e.target.value) : null);
+    setPage(1);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
 
   return (
     <PublicLayout>
@@ -101,7 +123,7 @@ const Products = () => {
               type="text" 
               placeholder="Search products..." 
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={handleSearchChange}
               className="search-input"
             />
           </div>
@@ -110,10 +132,7 @@ const Products = () => {
             <label>Category</label>
             <select 
               value={selectedCategory || ''} 
-              onChange={(e) => {
-                setSelectedCategory(e.target.value ? Number(e.target.value) : null);
-                setSelectedSubCategory(null); // Reset sub-category when category changes
-              }}
+              onChange={handleCategoryChange}
               style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontFamily: 'inherit' }}
             >
               <option value="">All Categories</option>
@@ -127,7 +146,7 @@ const Products = () => {
             <label>Sub-Category</label>
             <select 
               value={selectedSubCategory || ''} 
-              onChange={(e) => setSelectedSubCategory(e.target.value ? Number(e.target.value) : null)}
+              onChange={handleSubCategoryChange}
               disabled={!selectedCategory}
               style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontFamily: 'inherit', backgroundColor: !selectedCategory ? '#f1f5f9' : 'white' }}
             >
@@ -142,11 +161,11 @@ const Products = () => {
         <div className="products-content">
           <div className="content-header">
             <h1>Our Products</h1>
-            <p>Showing {filteredProducts.length} products</p>
+            <p>Showing {products.length} of {totalProducts} products</p>
           </div>
 
           <div className="product-grid">
-            {filteredProducts.map(product => (
+            {products.map(product => (
               <div key={product.id} className="product-card">
                 <div className="product-image">
                   {product.imageUrl ? (
@@ -162,12 +181,32 @@ const Products = () => {
                 </div>
               </div>
             ))}
-            {filteredProducts.length === 0 && (
+            {products.length === 0 && (
               <div className="no-products">
                 No products found matching your criteria.
               </div>
             )}
           </div>
+
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button 
+                className="pagination-btn" 
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                Previous
+              </button>
+              <span className="pagination-info">Page {page} of {totalPages}</span>
+              <button 
+                className="pagination-btn" 
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </PublicLayout>

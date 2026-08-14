@@ -41,15 +41,22 @@ const ManageProducts = () => {
 
   const [editingId, setEditingId] = useState<number | null>(null);
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   useEffect(() => {
     fetchProducts();
+  }, [page]);
+
+  useEffect(() => {
     fetchSubCategories();
   }, []);
 
   const fetchProducts = async () => {
     try {
-      const res = await api.get('/products');
-      setProducts(res.data);
+      const res = await api.get(`/products?page=${page}&limit=10`);
+      setProducts(res.data.data);
+      setTotalPages(res.data.totalPages);
     } catch (error) {
       console.error('Failed to fetch products', error);
     }
@@ -215,6 +222,26 @@ const ManageProducts = () => {
               )}
             </tbody>
           </table>
+          
+          {totalPages > 1 && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
+              <button 
+                className="btn-secondary" 
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                Previous
+              </button>
+              <span style={{ fontSize: '0.9rem', color: '#64748b' }}>Page {page} of {totalPages}</span>
+              <button 
+                className="btn-secondary" 
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </AdminLayout>

@@ -3,19 +3,39 @@ import prisma from '../utils/prisma';
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    const { subCategoryId, categoryId } = req.query;
+    const { subCategoryId, categoryId, page = 1, limit = 12, search } = req.query;
     let where: any = {};
     if (subCategoryId) {
       where.subCategoryId = Number(subCategoryId);
     } else if (categoryId) {
       where.subCategory = { categoryId: Number(categoryId) };
     }
+    if (search) {
+      where.name = { contains: String(search) };
+    }
     
-    const products = await prisma.product.findMany({
-      where,
-      include: { subCategory: { include: { category: true } } }
+    const pageNumber = Number(page);
+    const limitNumber = Number(limit);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    const [products, total] = await prisma.$transaction([
+      prisma.product.findMany({
+        where,
+        skip,
+        take: limitNumber,
+        include: { subCategory: { include: { category: true } } },
+        orderBy: { createdAt: 'desc' }
+      }),
+      prisma.product.count({ where })
+    ]);
+
+    res.json({
+      data: products,
+      total,
+      page: pageNumber,
+      limit: limitNumber,
+      totalPages: Math.ceil(total / limitNumber)
     });
-    res.json(products);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch products' });
   }
