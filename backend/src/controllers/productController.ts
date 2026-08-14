@@ -90,7 +90,10 @@ export const createProduct = async (req: Request, res: Response) => {
       },
     });
     res.status(201).json(product);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Product name already exists' });
+    }
     res.status(500).json({ error: 'Failed to create product' });
   }
 };
@@ -132,7 +135,10 @@ export const updateProduct = async (req: Request, res: Response) => {
       data,
     });
     res.json(product);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Product name already exists' });
+    }
     res.status(500).json({ error: 'Failed to update product' });
   }
 };

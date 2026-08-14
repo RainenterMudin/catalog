@@ -41,7 +41,9 @@ const ManageCategories = () => {
       setDescription('');
       setEditingId(null);
       fetchCategories();
-    } catch (error) {
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.error || 'Failed to save category';
+      alert(errorMessage);
       console.error('Failed to save category', error);
     }
   };

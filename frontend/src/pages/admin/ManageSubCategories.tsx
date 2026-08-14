@@ -62,7 +62,9 @@ const ManageSubCategories = () => {
       setCategoryId('');
       setEditingId(null);
       fetchSubCategories();
-    } catch (error) {
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.error || 'Failed to save sub-category';
+      alert(errorMessage);
       console.error('Failed to save sub-category', error);
     }
   };

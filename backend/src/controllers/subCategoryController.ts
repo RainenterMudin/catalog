@@ -33,7 +33,10 @@ export const createSubCategory = async (req: Request, res: Response) => {
       data: { name, description, categoryId: Number(categoryId) },
     });
     res.status(201).json(subCategory);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Sub-category name already exists' });
+    }
     res.status(500).json({ error: 'Failed to create sub-category' });
   }
 };
@@ -47,7 +50,10 @@ export const updateSubCategory = async (req: Request, res: Response) => {
       data: { name, description, categoryId: Number(categoryId) },
     });
     res.json(subCategory);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Sub-category name already exists' });
+    }
     res.status(500).json({ error: 'Failed to update sub-category' });
   }
 };

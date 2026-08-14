@@ -28,7 +28,10 @@ export const createCategory = async (req: Request, res: Response) => {
       data: { name, description },
     });
     res.status(201).json(category);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Category name already exists' });
+    }
     res.status(500).json({ error: 'Failed to create category' });
   }
 };
@@ -42,7 +45,10 @@ export const updateCategory = async (req: Request, res: Response) => {
       data: { name, description },
     });
     res.json(category);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return res.status(400).json({ error: 'Category name already exists' });
+    }
     res.status(500).json({ error: 'Failed to update category' });
   }
 };

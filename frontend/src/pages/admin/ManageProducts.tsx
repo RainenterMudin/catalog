@@ -98,7 +98,9 @@ const ManageProducts = () => {
       }
       resetForm();
       fetchProducts();
-    } catch (error) {
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.error || 'Failed to save product';
+      alert(errorMessage);
       console.error('Failed to save product', error);
     }
   };
