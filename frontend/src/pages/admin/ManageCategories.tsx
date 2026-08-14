@@ -109,16 +109,16 @@ const ManageCategories = () => {
           <table className="admin-table">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {categories.map(category => (
+              {categories.map((category, index) => (
                 <tr key={category.id}>
-                  <td>{category.id}</td>
+                  <td>{index + 1}</td>
                   <td>{category.name}</td>
                   <td>{category.description}</td>
                   <td className="">

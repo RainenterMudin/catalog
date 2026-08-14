@@ -145,7 +145,7 @@ const ManageSubCategories = () => {
           <table className="admin-table">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>#</th>
                 <th>Category</th>
                 <th>Name</th>
                 <th>Description</th>
@@ -153,9 +153,9 @@ const ManageSubCategories = () => {
               </tr>
             </thead>
             <tbody>
-              {subCategories.map(subCategory => (
+              {subCategories.map((subCategory, index) => (
                 <tr key={subCategory.id}>
-                  <td>{subCategory.id}</td>
+                  <td>{index + 1}</td>
                   <td>{subCategory.category?.name}</td>
                   <td>{subCategory.name}</td>
                   <td>{subCategory.description}</td>

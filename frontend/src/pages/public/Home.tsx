@@ -48,22 +48,7 @@ const Home = () => {
     }
   };
 
-  // Auto-scroll functionality
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (scrollRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-        // If reached the end, scroll back to beginning
-        if (scrollLeft + clientWidth >= scrollWidth - 10) {
-          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          scroll('right');
-        }
-      }
-    }, 3000); // 3 seconds interval
-
-    return () => clearInterval(interval);
-  }, []);
+ 
 
   useEffect(() => {
     const fetchProducts = async () => {
