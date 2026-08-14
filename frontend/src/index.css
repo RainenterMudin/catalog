@@ -1,11 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* Warm Handmade Knitting Theme */
+  --color-primary: #c57865; /* Warm Terracotta */
+  --color-primary-hover: #b06a58;
+  --color-action: #6b705c; /* Earthy Olive Green */
+  --color-action-hover: #585d4b;
+  --color-bg: #f4efe8; /* Natural Beige */
+  --color-surface: #ffffff; /* White cards */
+  --color-text-main: #4a3f35; /* Espresso Brown */
+  --color-text-muted: #8b7d70; /* Muted Taupe */
+  --color-border: #e8ded3;
+  --color-danger: #e27d60;
+  --color-danger-hover: #c96b50;
+  --color-footer-bg: #4a3f35;
+  --color-footer-text: #faf8f5;
+  --border-radius: 12px;
+  --shadow-soft: 0 4px 20px -2px rgba(74, 63, 53, 0.08);
+  --shadow-hover: 0 8px 30px -4px rgba(74, 63, 53, 0.12);
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Global button styles for consistency */
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-2px);
 }

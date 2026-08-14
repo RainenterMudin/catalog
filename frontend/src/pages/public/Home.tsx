@@ -72,10 +72,19 @@ const Home = () => {
   return (
     <PublicLayout>
       <section className="hero">
+        <div className="hero-decor decor-1">🧶</div>
+        <div className="hero-decor decor-2">🧵</div>
+        <div className="hero-decor decor-3">✨</div>
+        <div className="hero-decor decor-4">🧣</div>
         <div className="hero-content">
-          <h1>Discover Premium Products</h1>
-          <p>Explore our curated collection of the best items carefully selected just for you.</p>
+          <h1>Handcrafted With Love</h1>
+          <p>Explore our curated collection of the best handmade knitting items carefully crafted just for you.</p>
           <Link to="/products" className="hero-btn">Shop Now</Link>
+        </div>
+        <div className="custom-shape-divider-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C79.86,122.9,152.9,111.4,221.39,86.44Z" className="shape-fill"></path>
+            </svg>
         </div>
       </section>
 
@@ -88,6 +97,9 @@ const Home = () => {
               {featuredProducts.map((product, idx) => (
                 <div key={`${product.id}-${idx}`} className="carousel-item">
                   <div className="product-card">
+                    <div className="product-badge">
+                      🌿 BESTSELLER
+                    </div>
                     <div className="product-image">
                       {product.imageUrl ? (
                         <img src={product.imageUrl.startsWith('http') ? product.imageUrl : `https://catalog-14qg.onrender.com${product.imageUrl}`} alt={product.name} />
@@ -96,9 +108,22 @@ const Home = () => {
                       )}
                     </div>
                     <div className="product-info">
-                      <h3>{product.name}</h3>
-                      <p className="price">{formatRupiah(Number(product.price))}</p>
-                      <Link to={`/products/${product.slug}`} className="view-details-btn">View Details</Link>
+                      <h3 className="serif-title">{product.name}</h3>
+                      <div className="product-features">
+                        <span>🧶 Handmade</span>
+                        <span>✨ Premium Yarn</span>
+                      </div>
+                      <div className="price-action-row">
+                        <p className="price">{formatRupiah(Number(product.price))}</p>
+                      </div>
+                      <Link to={`/products/${product.slug}`} className="view-details-btn action-btn">
+                        <svg className="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                          <line x1="3" y1="6" x2="21" y2="6"></line>
+                          <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        VIEW DETAILS
+                      </Link>
                     </div>
                   </div>
                 </div>
