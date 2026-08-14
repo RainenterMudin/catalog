@@ -11,7 +11,7 @@ const PublicLayout = ({ children }: { children: React.ReactNode }) => {
       <header className="navbar">
         <div className="navbar-container">
           <Link to="/" className="navbar-brand">
-            ViteCatalog
+            DinzCatalog
           </Link>
           <nav className="navbar-nav">
             <Link to="/">Home</Link>
@@ -24,7 +24,7 @@ const PublicLayout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </main>
       <footer className="footer">
-        <p>&copy; {new Date().getFullYear()} ViteCatalog. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} DinzCatalog. All rights reserved.</p>
       </footer>
     </div>
   );
