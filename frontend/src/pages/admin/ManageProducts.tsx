@@ -55,8 +55,9 @@ const ManageProducts = () => {
   const fetchProducts = async () => {
     try {
       const res = await api.get(`/products?page=${page}&limit=10`);
-      setProducts(res.data.data);
-      setTotalPages(res.data.totalPages);
+      const fetchedProducts = res.data.data || (Array.isArray(res.data) ? res.data : []);
+      setProducts(fetchedProducts);
+      setTotalPages(res.data.totalPages || 1);
     } catch (error) {
       console.error('Failed to fetch products', error);
     }

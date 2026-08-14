@@ -21,7 +21,8 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         const res = await api.get('/products');
-        setFeaturedProducts(res.data.data.slice(0, 4)); // Show first 4
+        const fetchedProducts = res.data.data || (Array.isArray(res.data) ? res.data : []);
+        setFeaturedProducts(fetchedProducts.slice(0, 4)); // Show first 4
       } catch (error) {
         console.error('Failed to fetch products', error);
       }

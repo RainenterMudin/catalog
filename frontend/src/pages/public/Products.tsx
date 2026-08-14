@@ -65,9 +65,10 @@ const Products = () => {
       }
       
       const res = await api.get(url);
-      setProducts(res.data.data);
-      setTotalPages(res.data.totalPages);
-      setTotalProducts(res.data.total);
+      const fetchedProducts = res.data.data || (Array.isArray(res.data) ? res.data : []);
+      setProducts(fetchedProducts);
+      setTotalPages(res.data.totalPages || 1);
+      setTotalProducts(res.data.total || fetchedProducts.length);
     } catch (error) {
       console.error('Failed to fetch products', error);
     }
