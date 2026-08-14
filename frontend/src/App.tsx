@@ -30,7 +30,7 @@ function App() {
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/products/:slug" element={<ProductDetail />} />
 
           {/* Admin Routes */}
           <Route path="/cms/login" element={<Login />} />

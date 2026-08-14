@@ -9,22 +9,26 @@ interface Product {
   id: number;
   name: string;
   description: string;
-  price: number;
+  price: string;
   imageUrl: string;
-  category: {
+  slug: string;
+  subCategory?: {
     name: string;
+    category?: {
+      name: string;
+    };
   };
 }
 
 const ProductDetail = () => {
-  const { id } = useParams();
+  const { slug } = useParams<{ slug: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await api.get(`/products/${id}`);
+        const res = await api.get(`/products/${slug}`);
         setProduct(res.data);
       } catch (error) {
         console.error('Failed to fetch product', error);
@@ -33,7 +37,7 @@ const ProductDetail = () => {
       }
     };
     fetchProduct();
-  }, [id]);
+  }, [slug]);
 
   if (loading) return <PublicLayout><div className="loading">Loading...</div></PublicLayout>;
   if (!product) return <PublicLayout><div className="error">Product not found.</div></PublicLayout>;
@@ -42,7 +46,7 @@ const ProductDetail = () => {
     <PublicLayout>
       <div className="product-detail-page">
         <div className="breadcrumb">
-          <Link to="/products">Products</Link> / <span>{product.category?.name}</span> / <span>{product.name}</span>
+          <Link to="/products">Products</Link> / {product.subCategory?.category?.name && <span>{product.subCategory.category.name} / </span>} {product.subCategory?.name && <span>{product.subCategory.name} / </span>} <span>{product.name}</span>
         </div>
         
         <div className="product-detail-grid">
@@ -55,9 +59,9 @@ const ProductDetail = () => {
           </div>
           
           <div className="product-detail-info">
-            <span className="category-tag">{product.category?.name}</span>
+            <span className="category-tag">{product.subCategory?.name}</span>
             <h1>{product.name}</h1>
-            <p className="price">{formatRupiah(product.price)}</p>
+            <p className="price">{formatRupiah(Number(product.price))}</p>
             
             <div className="description">
               <h3>Description</h3>

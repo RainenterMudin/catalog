@@ -8,9 +8,16 @@ import './Products.css';
 interface Product {
   id: number;
   name: string;
-  price: number;
+  description: string;
+  price: string;
   imageUrl: string;
-  categoryId: number;
+  slug: string;
+  subCategory?: {
+    name: string;
+    category?: {
+      name: string;
+    };
+  };
 }
 
 interface Category {
@@ -150,8 +157,8 @@ const Products = () => {
                 </div>
                 <div className="product-info">
                   <h3>{product.name}</h3>
-                  <p className="price">{formatRupiah(product.price)}</p>
-                  <Link to={`/products/${product.id}`} className="view-btn">View Details</Link>
+                  <p className="price">{formatRupiah(Number(product.price))}</p>
+                  <Link to={`/products/${product.slug}`} className="view-details-btn">View Details</Link>
                 </div>
               </div>
             ))}

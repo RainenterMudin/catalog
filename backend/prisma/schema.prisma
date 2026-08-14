@@ -41,6 +41,7 @@ model Product {
   name          String
   description   String      @db.Text
   price         Decimal     @db.Decimal(10, 2)
+  slug          String?     @unique
   imageUrl      String?
   subCategoryId Int
   subCategory   SubCategory @relation(fields: [subCategoryId], references: [id])

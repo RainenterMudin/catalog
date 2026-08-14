@@ -24,8 +24,14 @@ export const getProducts = async (req: Request, res: Response) => {
 export const getProductById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    let whereClause: any = {};
+    if (!isNaN(Number(id))) {
+      whereClause = { id: Number(id) };
+    } else {
+      whereClause = { slug: id };
+    }
     const product = await prisma.product.findUnique({ 
-      where: { id: Number(id) },
+      where: whereClause,
       include: { subCategory: { include: { category: true } } }
     });
     if (!product) return res.status(404).json({ error: 'Product not found' });
@@ -40,11 +46,21 @@ export const createProduct = async (req: Request, res: Response) => {
     const { name, description, price, subCategoryId } = req.body;
     const imageUrl = req.file ? req.file.path : null;
     
+    const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    let baseSlug = slugify(name);
+    let slug = baseSlug;
+    let count = 1;
+    while (await prisma.product.findUnique({ where: { slug } })) {
+      slug = `${baseSlug}-${count}`;
+      count++;
+    }
+
     const product = await prisma.product.create({
       data: {
         name,
         description,
         price: Number(price),
+        slug,
         subCategoryId: Number(subCategoryId),
         imageUrl
       },
@@ -66,6 +82,18 @@ export const updateProduct = async (req: Request, res: Response) => {
       price: price ? Number(price) : undefined,
       subCategoryId: subCategoryId ? Number(subCategoryId) : undefined,
     };
+
+    if (name) {
+      const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      let baseSlug = slugify(name);
+      let slug = baseSlug;
+      let count = 1;
+      while (await prisma.product.findFirst({ where: { slug, id: { not: Number(id) } } })) {
+        slug = `${baseSlug}-${count}`;
+        count++;
+      }
+      data.slug = slug;
+    }
 
     if (req.file) {
       data.imageUrl = req.file.path;
