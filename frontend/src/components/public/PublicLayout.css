@@ -6,12 +6,13 @@
 }
 
 .navbar {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(253, 245, 242, 0.95); /* matching the cream/beige bg */
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 3px solid var(--color-primary);
+  box-shadow: 0 4px 15px rgba(227, 176, 130, 0.15);
 }
 
 .navbar-container {
@@ -24,24 +25,46 @@
 }
 
 .navbar-brand {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 800;
-  color: #1a1a1a;
+  font-family: 'Playfair Display', serif;
+  color: #333333;
   text-decoration: none;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.logo-brand:hover .logo-img {
+  transform: rotate(5deg) scale(1.05);
+}
+
+.logo-text {
+  color: #3e2723; /* Dark earthy brown for high contrast */
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5); /* Subtle white glow for extra pop */
 }
 
 .navbar-nav a {
   text-decoration: none;
-  color: #4b5563;
-  font-weight: 500;
-  transition: color 0.2s;
+  color: var(--color-text-main);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
 }
 
 .navbar-nav a:hover {
-  color: #3b82f6;
+  color: var(--color-danger); /* use the red accent color from the logo */
+  background-color: #fcebb6; /* light yellow pastel on hover */
+  transform: translateY(-2px);
 }
 
 .navbar-nav {

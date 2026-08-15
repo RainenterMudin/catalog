@@ -1,23 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 :root {
-  /* Warm Handmade Knitting Theme */
-  --color-primary: #c57865; /* Warm Terracotta */
-  --color-primary-hover: #b06a58;
-  --color-action: #6b705c; /* Earthy Olive Green */
-  --color-action-hover: #585d4b;
-  --color-bg: #f4efe8; /* Natural Beige */
+  /* Nero Stitchery Theme */
+  --color-primary: #e3b082; /* Soft Peach */
+  --color-primary-hover: #d29d6f;
+  --color-action: #cfe2da; /* Mint Green */
+  --color-action-hover: #b5d5c9;
+  --color-bg: #fdf5f2; /* Cream/Beige */
   --color-surface: #ffffff; /* White cards */
-  --color-text-main: #4a3f35; /* Espresso Brown */
-  --color-text-muted: #8b7d70; /* Muted Taupe */
-  --color-border: #e8ded3;
-  --color-danger: #e27d60;
-  --color-danger-hover: #c96b50;
-  --color-footer-bg: #4a3f35;
-  --color-footer-text: #faf8f5;
+  --color-text-main: #333333; /* Dark Gray */
+  --color-text-muted: #777777; /* Muted Gray */
+  --color-border: #f2e3d5;
+  --color-danger: #cc2c2c; /* Red Button from logo */
+  --color-danger-hover: #a82323;
+  --color-footer-bg: #f5eedc;
+  --color-footer-text: #333333;
   --border-radius: 12px;
-  --shadow-soft: 0 4px 20px -2px rgba(74, 63, 53, 0.08);
-  --shadow-hover: 0 8px 30px -4px rgba(74, 63, 53, 0.12);
+  --shadow-soft: 0 4px 20px -2px rgba(227, 176, 130, 0.15);
+  --shadow-hover: 0 8px 30px -4px rgba(227, 176, 130, 0.25);
 }
 
 body {

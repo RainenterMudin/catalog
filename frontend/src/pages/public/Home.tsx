@@ -72,10 +72,10 @@ const Home = () => {
   return (
     <PublicLayout>
       <section className="hero">
-        <div className="hero-decor decor-1">🧶</div>
-        <div className="hero-decor decor-2">🧵</div>
-        <div className="hero-decor decor-3">✨</div>
-        <div className="hero-decor decor-4">🧣</div>
+        <div className="hero-decor decor-1">♥</div>
+        <div className="hero-decor decor-2">♥</div>
+        <div className="hero-decor decor-3">♥</div>
+        <div className="hero-decor decor-4">♥</div>
         <div className="hero-content">
           <h1>Handcrafted With Love</h1>
           <p>Explore our curated collection of the best handmade knitting items carefully crafted just for you.</p>

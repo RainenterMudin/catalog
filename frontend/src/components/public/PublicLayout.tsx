@@ -10,8 +10,9 @@ const PublicLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="public-layout">
       <header className="navbar">
         <div className="navbar-container">
-          <Link to="/" className="navbar-brand">
-            DinzCatalog
+          <Link to="/" className="navbar-brand logo-brand">
+            <img src="/src/assets/logo.png" alt="Nero Stitchery Logo" className="logo-img" />
+            <span className="logo-text">Nero Stitchery</span>
           </Link>
           <nav className="navbar-nav">
             <Link to="/">Home</Link>
@@ -24,7 +25,7 @@ const PublicLayout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </main>
       <footer className="footer">
-        <p>&copy; {new Date().getFullYear()} DinzCatalog. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Nero Stitchery. 100% Handmade with love.</p>
       </footer>
     </div>
   );
