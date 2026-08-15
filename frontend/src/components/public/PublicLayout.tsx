@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './PublicLayout.css';
+import logoImg from '../../assets/logo.png';
 import { useAuth } from '../../context/AuthContext';
 
-const PublicLayout = ({ children }: { children: React.ReactNode }) => {
+const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { logout } = useAuth();
 
   return (
@@ -11,7 +12,7 @@ const PublicLayout = ({ children }: { children: React.ReactNode }) => {
       <header className="navbar">
         <div className="navbar-container">
           <Link to="/" className="navbar-brand logo-brand">
-            <img src="/src/assets/logo.png" alt="Nero Stitchery Logo" className="logo-img" />
+            <img src={logoImg} alt="Nero Stitchery Logo" className="logo-img" />
             <span className="logo-text">Nero Stitchery</span>
           </Link>
           <nav className="navbar-nav">

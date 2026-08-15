@@ -322,11 +322,11 @@
 }
 
 .carousel-arrow-btn.left {
-  left: -2rem;
+  left: 10px;
 }
 
 .carousel-arrow-btn.right {
-  right: -2rem;
+  right: 10px;
 }
 
 @media (max-width: 768px) {

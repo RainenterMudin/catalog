@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "dinzcatalog",
+    "site": "nerostitchery",
     "public": "dist",
     "ignore": [
       "firebase.json",
